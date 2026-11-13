@@ -1,0 +1,25 @@
+name: Build
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: brew install ldid dpkg make
+      - name: Setup Theos (roothide fork)
+        run: |
+          git clone --recursive https://github.com/roothide/theos.git $HOME/theos
+          echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+      - name: Get SDKs
+        run: |
+          git clone --depth=1 https://github.com/theos/sdks.git /tmp/sdks
+          cp -R /tmp/sdks/*.sdk $HOME/theos/sdks/
+      - name: Build
+        run: gmake package FINALPACKAGE=1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deb
+          path: packages/*.deb

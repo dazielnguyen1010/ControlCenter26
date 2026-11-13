@@ -1,0 +1,9 @@
+Package: com.example.ccglassdump
+Name: CCGlassDump
+Version: 0.0.1
+Architecture: iphoneos-arm64
+Description: Ghi cau truc view cua Control Center ra file de chan doan
+Maintainer: you
+Author: you
+Section: Tweaks
+Depends: firmware (>= 14.0)
