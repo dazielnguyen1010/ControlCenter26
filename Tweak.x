@@ -34,3 +34,11 @@ static void dumpView(UIView *v, int depth, NSMutableString *out) {
     });
 }
 %end
+%ctor {
+    NSString *name = [[NSBundle mainBundle] bundleIdentifier] ?: @"unknown";
+    [[NSString stringWithFormat:@"loaded in %@\n", name]
+        writeToFile:@"/var/mobile/Documents/ccglass_loaded.txt"
+         atomically:YES
+           encoding:NSUTF8StringEncoding
+              error:nil];
+}
